@@ -78,28 +78,24 @@ def add_data():
         holiday_cnts = request.form.getlist('holiday_cnt')
         competitor_indices = request.form.getlist('competitor_index')
         
-        # 프로모션 여부: 첫 번째 행은 'is_promotion', 나머지는 'is_promotion_1', 'is_promotion_2' ...
-        is_promotions = []
-        # 첫 번째 행의 프로모션 여부
-        first_promotion = request.form.get('is_promotion', '0')
-        is_promotions.append(first_promotion)
-        
-        # 나머지 행들의 프로모션 여부 (인덱스 1부터)
-        i = 1
-        while True:
-            promotion_key = f'is_promotion_{i}'
-            promotion_value = request.form.get(promotion_key)
-            if promotion_value is None:
-                break
-            is_promotions.append(promotion_value)
-            i += 1
-
         # make_data()로 가상 데이터 생성 (기본값 60개)
         df = make_data()
         # 생성된 데이터의 80%로 모델 학습
         model = train_model(df)
         
         num_rows = len(months)
+        
+        # 프로모션 여부: 첫 번째 행은 'is_promotion', 나머지는 'is_promotion_1', 'is_promotion_2' ...
+        is_promotions = []
+        # 첫 번째 행의 프로모션 여부
+        first_promotion = request.form.get('is_promotion', '0')
+        is_promotions.append(first_promotion)
+        
+        # 나머지 행들의 프로모션 여부 (행 수 기준으로 순서대로 가져오기)
+        for i in range(1, num_rows):
+            promotion_key = f'is_promotion_{i}'
+            promotion_value = request.form.get(promotion_key, '0')  # None이면 기본값 '0' 사용
+            is_promotions.append(promotion_value)
         
         for i in range(num_rows):
             month = int(months[i])
