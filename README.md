@@ -65,11 +65,13 @@ homeshopping-sales-prediction/
    ```
 
 3. MySQL 데이터베이스 설정
-   - `db.py` 파일의 `base_config`에서 MySQL 연결 정보 수정
-   - 데이터베이스 생성 및 테이블 생성
+   - `db.py` 파일의 `base_config`에서 MySQL 연결 정보 수정 (host, user, password)
+   - MySQL 서버가 실행 중인지 확인
+   - `db.py` 실행하여 데이터베이스와 테이블 자동 생성
      ```bash
      python db.py
      ```
+   - 실행 시 `homeshopping` 데이터베이스와 `homeshopping_sales` 테이블이 자동으로 생성됩니다.
 
 4. 애플리케이션 실행
    ```bash
