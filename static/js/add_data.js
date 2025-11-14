@@ -6,6 +6,11 @@ document.addEventListener('DOMContentLoaded', function() {
         function setDefaultValues(inputs, isNewRow = false) {
             inputs.forEach((input, index) => {
                 if (input.type === 'radio') {
+                    // 새 행인 경우 라디오 버튼 name 변경 (각 행마다 독립적인 그룹)
+                    if (isNewRow) {
+                        const radioGroup = `is_promotion_${rowIndex}`;
+                        input.name = radioGroup;
+                    }
                     // 기본값: 비프로모션(0) 선택
                     if (input.value === '0') {
                         input.checked = true;
@@ -66,8 +71,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // 모든 입력 필드 가져오기
         const inputs = newRow.querySelectorAll('input');
         
-        // 기본값 설정
-        setDefaultValues(inputs, false);
+        // 기본값 설정 (새 행이므로 isNewRow = true)
+        setDefaultValues(inputs, true);
         
         // 새 행을 테이블에 추가
         tbody.appendChild(newRow);
