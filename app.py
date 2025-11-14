@@ -24,7 +24,7 @@ def make_data(n_months=60, seed=85):
         50 * holiday_cnt + # 휴일 50배 영향
         800 * (price_index - 1.0) + # 물가 800배 영향
         400 * (competitor_index - 1.0) + # 경쟁 400배 영향
-        1500 * np.sin(2 * np.pi * months / 12) + # 연말 1500배 영향
+        1500 * np.cos(2 * np.pi * months / 12) + # 연말 1500배 영향 (12월 최대값)
         np.random.normal(0,200,n_months) # 약간의 잡음
     )
     
