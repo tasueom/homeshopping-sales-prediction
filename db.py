@@ -42,6 +42,15 @@ def create_table():
     cursor.close()
     conn.close()
 
+def get_all_data():
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT * FROM {table_name}")
+    rows = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return rows
+
 if __name__ == "__main__":
     try:
         create_database()
