@@ -1,0 +1,75 @@
+const chartData = JSON.parse(document.getElementById('chart-data').textContent);
+const allData = chartData.all_data;
+
+// 차트용 데이터: id와 sales만 추출
+const ids = allData.map(row => row[0]);  // id
+const sales = allData.map(row => row[8]);  // sales
+
+const ctx = document.getElementById('salesChart').getContext('2d');
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ids,  // x축: 1, 2, 3, ... (숫자만)
+        datasets: [{
+            label: '예상 매출',
+            data: sales,  // y축: sales
+            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: 'ID'  // x축 라벨
+                }
+            },
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    callback: function(value) {
+                        return value + '만원';  // y축 단위에 "만원" 붙이기
+                    }
+                }
+            }
+        },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    title: function(context) {
+                        // 툴팁 제목: ID n
+                        const row = allData[context[0].dataIndex];
+                        return 'ID ' + row[0];
+                    },
+                    label: function(context) {
+                        // 툴팁 내용: 모든 입력 정보 표시
+                        const row = allData[context.dataIndex];
+                        // row: [id, month, is_promotion, tv_ad_spend, online_ad_spend, price_index, holiday_cnt, competitor_index, sales]
+                        const month = row[1];
+                        const isPromotion = row[2] === 1 ? '프로모션' : '비프로모션';
+                        const tvAdSpend = row[3];
+                        const onlineAdSpend = row[4];
+                        const priceIndex = row[5];
+                        const holidayCnt = row[6];
+                        const competitorIndex = row[7];
+                        const salesValue = row[8];
+                        
+                        return [
+                            '월: ' + month,
+                            '프로모션 여부: ' + isPromotion,
+                            'TV 광고비: ' + tvAdSpend + '만원',
+                            '온라인 광고비: ' + onlineAdSpend + '만원',
+                            '물가 지수: ' + priceIndex,
+                            '휴일 일수: ' + holidayCnt + '일',
+                            '경쟁 강도: ' + competitorIndex,
+                            '예상매출: ' + salesValue + '만원'
+                        ];
+                    }
+                }
+            }
+        }
+    }
+});
+
