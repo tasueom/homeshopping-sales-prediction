@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block title %}데이터 입력{% endblock %}
+{% block content %}
+<h2>데이터 입력</h2>
+<section id="form">
+    <form method="post">
+        <section id="buttons">
+            <button type="button" id="add_row">입력 행 추가</button>
+            <button type="submit">데이터 저장</button>
+        </section>
+        <table>
+            <thead>
+                <tr>
+                    <th>월</th>
+                    <th>프로모션 여부</th>
+                    <th>TV 광고비(만원)</th>
+                    <th>온라인 광고비(만원)</th>
+                    <th>물가 지수(1.0 = 평균)</th>
+                    <th>휴일 일수</th>
+                    <th>경쟁 강도(1.0 = 평균)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="number" name="month" min="1" max="12" required></td>
+                    <td><input type="radio" name="is_promotion" value="0"> 비프로모션
+                        <input type="radio" name="is_promotion" value="1"> 프로모션</td>
+                    <td><input type="number" name="tv_ad_spend" required></td>
+                    <td><input type="number" name="online_ad_spend" required></td>
+                    <td><input type="number" name="price_index" required></td>
+                    <td><input type="number" name="holiday_cnt" required></td>
+                    <td><input type="number" name="competitor_index" required></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/add_data.js') }}"></script>
+{% endblock %}

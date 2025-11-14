@@ -51,6 +51,14 @@ def get_all_data():
     conn.close()
     return rows
 
+def insert_data(month, is_promotion, tv_ad_spend, online_ad_spend, price_index, holiday_cnt, competitor_index, sales):
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute(f"INSERT INTO {table_name} (month, is_promotion, tv_ad_spend, online_ad_spend, price_index, holiday_cnt, competitor_index, sales) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", (month, is_promotion, tv_ad_spend, online_ad_spend, price_index, holiday_cnt, competitor_index, sales))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
 if __name__ == "__main__":
     try:
         create_database()
