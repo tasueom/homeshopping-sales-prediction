@@ -45,7 +45,7 @@ def create_table():
 def get_all_data():
     conn = get_conn()
     cursor = conn.cursor()
-    cursor.execute(f"SELECT * FROM {table_name}")
+    cursor.execute(f"SELECT * FROM {table_name} ORDER BY id DESC")
     rows = cursor.fetchall()
     cursor.close()
     conn.close()
