@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
+import json
 import db
 
 app = Flask(__name__)
@@ -66,6 +67,16 @@ def index():
 def list_data():
     list_data = db.get_all_data()
     return render_template('list_data.html', list_data=list_data)
+
+@app.route('/chart_data')
+def chart_data():
+    data = db.get_all_data()
+    # 모든 데이터를 리스트로 변환 (id, month, is_promotion, tv_ad_spend, online_ad_spend, price_index, holiday_cnt, competitor_index, sales)
+    chart_data = {
+        'all_data': [[row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]] for row in data]
+    }
+    chart_data_json = json.dumps(chart_data, ensure_ascii=False)
+    return render_template('chart_data.html', chart_data=chart_data_json)
 
 @app.route('/add_data', methods=['GET', 'POST'])
 def add_data():
