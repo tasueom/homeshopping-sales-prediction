@@ -17,8 +17,8 @@
                 <th>예상 매출</th>
             </tr>
         </thead>
-        {% for row in list_data %}
         <tbody>
+            {% for row in list_data %}
             <tr>
                 <td>{{ row[1] }}</td>
                 <td>{{ row[2] }}</td>
@@ -29,8 +29,8 @@
                 <td>{{ row[7] }}</td>
                 <td>{{ row[8] }}</td>
             </tr>
-        </tbody>
         {% endfor %}
+        </tbody>
     </table>
     {% else %}
     <p>데이터가 없습니다.</p>
