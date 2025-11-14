@@ -7,6 +7,7 @@
     <table>
         <thead>
             <tr>
+                <th>ID</th>
                 <th>월</th>
                 <th>프로모션 여부</th>
                 <th>TV 광고비</th>
@@ -20,6 +21,7 @@
         <tbody>
             {% for row in list_data %}
             <tr>
+                <td>{{ row[0] }}</td>
                 <td>{{ row[1] }}</td>
                 <td>{{ row[2] }}</td>
                 <td>{{ row[3] }}</td>
